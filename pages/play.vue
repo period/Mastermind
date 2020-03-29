@@ -2,11 +2,14 @@
   <b-container fluid>
     <b-row>
       <b-col sm="12" class="text-center">
-          <b-alert variant="success" v-if="hasWon == true" show>Successfully cracked the code in {{ submittedGuesses.length }} moves.</b-alert>
+        <b-alert variant="success" v-if="hasWon == true" show
+          >Successfully cracked the code in
+          {{ submittedGuesses.length }} moves.</b-alert
+        >
       </b-col>
     </b-row>
     <b-row>
-      <b-col sm="9">
+      <b-col sm="9" v-if="!hasWon">
         <h1>Make your guess here</h1>
         <p>Current input:</p>
         <GuessBtn
@@ -79,7 +82,8 @@ export default {
       submittedGuesses: [],
       correctCode: [],
       allowDuplicatesInCode: false,
-      hasWon: true
+      hasWon: false,
+      started: Math.round(new Date().getTime() / 1000)
     };
   },
   mounted: function() {
@@ -104,6 +108,23 @@ export default {
   methods: {
     handleWin: function() {
       this.hasWon = true;
+      if (localStorage.getItem("name") == null)
+        localStorage.setItem("name", "Anonymous");
+      $nuxt.$axios
+        .post("https://mastermind.thomas.gg/api/leaderboard_submit", {
+          code: this.correctCode,
+          name: localStorage.getItem("name"),
+          attempts: this.submittedGuesses.length,
+          guesses: this.submittedGuesses,
+          duplicates: this.allowDuplicatesInCode,
+          started: this.started
+        })
+        .then(function(response) {
+          console.log("Successfully added to the leaderboard.");
+        })
+        .catch(function(error) {
+          alert("Something went wrong submitting to the leaderboard...");
+        });
     },
     submitGuess: function() {
       if (this.currentGuess.length != 4) {
@@ -112,8 +133,11 @@ export default {
       }
       this.submittedGuesses.unshift(this.currentGuess);
       this.currentGuess = [];
+      if (this.submittedGuesses.length == 1)
+        this.started = Math.round(new Date().getTime() / 1000);
     },
     addToGuess: function(colour) {
+      console.log(this.correctCode);
       if (this.currentGuess.length == 4) {
         alert("Only 4 pegs per guess, please...");
         return;
