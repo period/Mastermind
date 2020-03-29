@@ -5,7 +5,7 @@
         header="Mastermind"
         lead="The game, Mastermind. Not much more to say."
       >
-        <b-button variant="primary" href="#">Play</b-button>
+        <b-button variant="primary" to="/play">Play</b-button>
       </b-jumbotron>
     </div>
   </div>
