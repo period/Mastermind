@@ -8,7 +8,7 @@
       <b-navbar-nav>
           <b-nav-item to="/rules">Guide/Rules</b-nav-item>
           <b-nav-item to="/leaderboard">Leaderboard</b-nav-item>
-          <b-nav-item to="/leaderboard">Settings</b-nav-item>
+          <b-nav-item to="/settings">Settings</b-nav-item>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
