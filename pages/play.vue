@@ -1,6 +1,11 @@
 <template>
   <b-container fluid>
     <b-row>
+      <b-col sm="12" class="text-center">
+          <b-alert variant="success" v-if="hasWon == true" show>Successfully cracked the code in {{ submittedGuesses.length }} moves.</b-alert>
+      </b-col>
+    </b-row>
+    <b-row>
       <b-col sm="9">
         <h1>Make your guess here</h1>
         <p>Current input:</p>
@@ -38,7 +43,13 @@
           :guess="guess"
           :addToGuess="addToGuess"
           :correctCode="correctCode"
-          :key="Math.random().toString(36).slice(2).replace(/[0-9]/g, '')"
+          :key="
+            Math.random()
+              .toString(36)
+              .slice(2)
+              .replace(/[0-9]/g, '')
+          "
+          :handleWin="handleWin"
         />
       </b-col>
     </b-row>
@@ -67,7 +78,8 @@ export default {
       currentGuess: [],
       submittedGuesses: [],
       correctCode: [],
-      allowDuplicatesInCode: false
+      allowDuplicatesInCode: false,
+      hasWon: true
     };
   },
   mounted: function() {
@@ -90,6 +102,9 @@ export default {
       }
   },
   methods: {
+    handleWin: function() {
+      this.hasWon = true;
+    },
     submitGuess: function() {
       if (this.currentGuess.length != 4) {
         alert("Only 4 pegs per guess, please...");

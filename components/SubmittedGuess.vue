@@ -25,7 +25,7 @@ import GuessResultPeg from "../components/GuessResultPeg";
 export default {
   name: "SubmittedGuess",
   components: { GuessBtn, GuessResultPeg },
-  props: ["guess", "addToGuess", "correctCode"],
+  props: ["guess", "addToGuess", "correctCode", "handleWin"],
   data: function() {
     return { resultPegs: [] };
   },
@@ -46,7 +46,7 @@ export default {
         this.resultPegs.push("#bdc3c7"); // white
       }
     }
-    console.log(this.resultPegs);
+    if(correctIndexes.length == 4) this.handleWin();
   }
 };
 </script>
