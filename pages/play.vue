@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     handleWin: function() {
+        if(this.hasWon == true) return;
       this.hasWon = true;
       if (localStorage.getItem("name") == null)
         localStorage.setItem("name", "Anonymous");
