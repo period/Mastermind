@@ -11,7 +11,7 @@
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
-        <b-button type="primary" to="/create-game">Play a game</b-button>
+        <b-button to="/create-game">Play a game</b-button>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
